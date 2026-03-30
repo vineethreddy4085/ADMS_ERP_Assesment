@@ -1,4 +1,4 @@
-# Item Processing Application
+# ADMS ERP - Item Processing System
 
 ## Overview
 This is a web application developed using ASP.NET MVC where an item with a given weight can be processed to generate one or more child items. Each child item can be further processed, forming a parent-child hierarchy.
