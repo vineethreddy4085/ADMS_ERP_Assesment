@@ -67,25 +67,28 @@ public class ItemController : Controller
     }
 
     [HttpPost]
-    public ActionResult Process(int parentId, string childName, double weight)
+    public ActionResult Process(int parentId, List<string> childNames, List<double> weights)
     {
-        var child = new Item
+        for (int i = 0; i < childNames.Count; i++)
         {
-            ItemName = childName,
-            Weight = weight,
-            ParentItemId = parentId,
-            IsProcessed = false
-        };
-
-        db.Items.Add(child);
-
-        var parent = db.Items.Find(parentId);
-        parent.IsProcessed = true;
-
-        db.SaveChanges();
-
-        return RedirectToAction("Index");
+            var child = new Item
+            {
+                ItemName = childNames[i],
+                Weight = weights[i],
+                ParentItemId = parentId,
+                IsProcessed = false
+            };
+    
+            db.Items.Add(child);
     }
+
+    var parent = db.Items.Find(parentId);
+    parent.IsProcessed = true;
+
+    db.SaveChanges();
+
+    return RedirectToAction("Index");
+}
 
     // TREE VIEW
     public ActionResult TreeView()
