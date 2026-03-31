@@ -1,20 +1,37 @@
 @model List<ItemProcessingApp.Models.Item>
 
+<h2>Add Item</h2>
+<form method="post" action="/Home/Add">
+    Name: <input type="text" name="name" required />
+    Weight: <input type="number" name="weight" required />
+    <button type="submit">Add</button>
+</form>
+
+<h2>Process Item (Add Child)</h2>
+<form method="post" action="/Home/Process">
+    Parent ID: <input type="number" name="parentId" required />
+    Child Name: <input type="text" name="childName" required />
+    Child Weight: <input type="number" name="childWeight" required />
+    <button type="submit">Process</button>
+</form>
+
 <h2>Items List</h2>
 
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Price</th>
-    </tr>
+<ul>
+@foreach (var item in Model.Where(x => x.ParentId == null))
+{
+    <li>
+        @item.Name (@item.Weight)
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.Id</td>
-            <td>@item.Name</td>
-            <td>@item.Price</td>
-        </tr>
-    }
-</table>
+        @if (item.Children != null && item.Children.Count > 0)
+        {
+            <ul>
+                @foreach (var child in item.Children)
+                {
+                    <li>@child.Name (@child.Weight)</li>
+                }
+            </ul>
+        }
+    </li>
+}
+</ul>
