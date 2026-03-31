@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 
 namespace ItemProcessingApp.Models
 {
@@ -6,6 +6,10 @@ namespace ItemProcessingApp.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public double Price { get; set; }
+        public double Weight { get; set; }
+
+        // Parent-Child relationship
+        public int? ParentId { get; set; }
+        public List<Item> Children { get; set; }
     }
 }
